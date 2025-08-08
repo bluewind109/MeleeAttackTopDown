@@ -3,7 +3,7 @@ class_name Player
 
 @export var state_machine: CallableStateMachine
 
-@export var sprite: Sprite2D
+@export var character_sprite: Sprite2D
 var idle_texture: Texture2D = preload("./sprites/Player_idle.png")
 var run_texture: Texture2D = preload("./sprites/Player_run.png")
 
@@ -67,9 +67,9 @@ func _play_anim(anim_name: String):
 	# print("_play_anim: ", anim_name)
 	var sprite_size: float = 32
 	var anim_data: Variant = anim_dict[anim_name]
-	sprite.texture = anim_data.texture
-	sprite.hframes = anim_data.hframes
-	sprite.region_rect.size = Vector2(sprite_size * sprite.hframes, sprite_size)
+	character_sprite.texture = anim_data.texture
+	character_sprite.hframes = anim_data.hframes
+	character_sprite.region_rect.size = Vector2(sprite_size * character_sprite.hframes, sprite_size)
 	anim_player.play(anim_dict[anim_name].anim_id)
 	anim_player.speed_scale = 0.25
 	current_anim = anim_name

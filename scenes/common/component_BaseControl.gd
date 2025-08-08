@@ -6,6 +6,7 @@ const PLAYER_INPUT: Dictionary[String, String] = {
 	"DOWN": "down",
 	"LEFT": "left",
 	"RIGHT": "right",
+	"ATTACK": "attack"
 }
 
 var component_velocity: ComponentVelocity

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr4wmmmvb001j"]
+
+[ext_resource type="Script" uid="uid://c5y06pe6fo72x" path="res://scenes/common/component_MeleeWeapon/component_MeleeWeapon.gd" id="1_nfc38"]
+
+[node name="component_MeleeWeapon" type="Node2D"]
+script = ExtResource("1_nfc38")

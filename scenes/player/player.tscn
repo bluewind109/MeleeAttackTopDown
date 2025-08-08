@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://v67gpa0c2rdm"]
+[gd_scene load_steps=26 format=3 uid="uid://v67gpa0c2rdm"]
 
 [ext_resource type="Script" uid="uid://c7fml14t62ej7" path="res://scenes/player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://bojlohyvov773" path="res://scenes/common/callable_state_machine/callable_state_machine.tscn" id="2_rgyib"]
@@ -6,11 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://hwx777nqq80" path="res://scenes/player/sprites/Player_idle.png" id="3_hg6s5"]
 [ext_resource type="PackedScene" uid="uid://ba5chyifcbwsv" path="res://scenes/common/component_Hurtbox/component_Hurtbox.tscn" id="4_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://c5srpg1xw2dur" path="res://scenes/common/component_Look/component_Look.tscn" id="5_8t03j"]
+[ext_resource type="PackedScene" uid="uid://diyefkios6nos" path="res://scenes/common/component_Anim_SpriteSheet/component_Anim_SpriteSheet.tscn" id="5_fm80t"]
 [ext_resource type="PackedScene" uid="uid://c8vwlygwm1ac2" path="res://scenes/common/component_Exp/component_Exp.tscn" id="5_g6k8r"]
-[ext_resource type="PackedScene" uid="uid://x0xpt5ix1x63" path="res://scenes/common/component_Weapon/component_Weapon.tscn" id="6_2ieo8"]
 [ext_resource type="Script" uid="uid://bb5c06xlmd0fb" path="res://scenes/common/component_Exp/component_Exp.gd" id="6_boad6"]
 [ext_resource type="PackedScene" uid="uid://kwq7kkbhdepp" path="res://scenes/common/component_Velocity/component_Velocity.tscn" id="7_boad6"]
 [ext_resource type="PackedScene" uid="uid://bp71esg3p5br1" path="res://scenes/common/component_FourWaysControl/component_FourWaysControl.tscn" id="7_rgyib"]
+[ext_resource type="PackedScene" uid="uid://dq7cm15ipvrjw" path="res://scenes/common/component_MeleeAttack/component_MeleeAttack.tscn" id="13_gx1jg"]
+[ext_resource type="PackedScene" uid="uid://deglm4gc4ddcp" path="res://scenes/common/component_Hitbox/component_Hitbox.tscn" id="14_ugbui"]
+[ext_resource type="PackedScene" uid="uid://cr4wmmmvb001j" path="res://scenes/common/component_MeleeWeapon/component_MeleeWeapon.tscn" id="15_fcs02"]
+[ext_resource type="Texture2D" uid="uid://ckgf02737wxa0" path="res://scenes/player/sprites/Sword1.png" id="15_myrg7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oul6g"]
 radius = 0.0
@@ -74,16 +78,123 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boad6"]
 size = Vector2(14, 24)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "sprite", "component_health", "component_look", "component_velocity", "anim_player") groups=["Player"]]
+[sub_resource type="Animation" id="Animation_fcs02"]
+resource_name = "attack1"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4075, 0.458462, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(13, -0.0119991), Vector2(14, -12), Vector2(14, -12), Vector2(22, 9), Vector2(22, 7), Vector2(13, -0.0119991)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.407522, 0.458462, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-1.309, -2.42343, -2.42343, 0.554691, 0.0255932, -1.309]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../..:is_attacking")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("component_Hitbox")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3, 0.4075),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"toggle_hitbox"
+}, {
+"args": [false],
+"method": &"toggle_hitbox"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_myrg7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(13, -0.0119991)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.309]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../..:is_attacking")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kvlxm"]
+_data = {
+&"RESET": SubResource("Animation_myrg7"),
+&"attack1": SubResource("Animation_fcs02")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcs02"]
+radius = 2.39255
+height = 23.224
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "character_sprite", "component_health", "component_look", "component_velocity", "component_anim_ss", "anim_player") groups=["Player"]]
 collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_oul6g")
 state_machine = NodePath("callable_state_machine")
-sprite = NodePath("Sprite2D")
+character_sprite = NodePath("character_sprite")
 component_health = NodePath("component_Health")
 component_look = NodePath("component_Look")
 component_velocity = NodePath("component_Velocity")
-anim_player = NodePath("Sprite2D/AnimationPlayer")
+component_anim_ss = NodePath("component_Anim_SpriteSheet")
+anim_player = NodePath("character_sprite/AnimationPlayer")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
@@ -98,22 +209,23 @@ shape = SubResource("CircleShape2D_oul6g")
 [node name="component_Health" parent="." instance=ExtResource("2_yw30f")]
 
 [node name="component_Look" parent="." node_paths=PackedStringArray("origin_sprite") instance=ExtResource("5_8t03j")]
-origin_sprite = NodePath("../Sprite2D")
+origin_sprite = NodePath("../character_sprite")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="component_Anim_SpriteSheet" parent="." instance=ExtResource("5_fm80t")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="component_Anim_SpriteSheet"]
+
+[node name="character_sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -16)
 texture = ExtResource("3_hg6s5")
 hframes = 6
 region_enabled = true
 region_rect = Rect2(0, 0, 192, 32)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="character_sprite"]
 libraries = {
 &"": SubResource("AnimationLibrary_2ieo8")
 }
-
-[node name="component_Weapon" parent="." instance=ExtResource("6_2ieo8")]
-position = Vector2(0, -10)
 
 [node name="component_Hurtbox" parent="." node_paths=PackedStringArray("component_health") instance=ExtResource("4_qjkh3")]
 collision_mask = 0
@@ -130,3 +242,44 @@ script = ExtResource("6_boad6")
 [node name="component_Velocity" parent="." instance=ExtResource("7_boad6")]
 
 [node name="component_FourWaysControl" parent="component_Velocity" instance=ExtResource("7_rgyib")]
+
+[node name="component_MeleeAttack" parent="." node_paths=PackedStringArray("component_hitbox", "component_melee_weapon") instance=ExtResource("13_gx1jg")]
+component_hitbox = NodePath("component_Hitbox")
+component_melee_weapon = NodePath("../component_MeleeWeapon")
+
+[node name="component_Hitbox" parent="component_MeleeAttack" instance=ExtResource("14_ugbui")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="component_MeleeAttack/component_Hitbox"]
+
+[node name="component_MeleeWeapon" parent="." node_paths=PackedStringArray("component_hitbox", "pivot", "weapon_sprite", "animation_player") instance=ExtResource("15_fcs02")]
+component_hitbox = NodePath("../component_MeleeAttack/component_Hitbox")
+pivot = NodePath("Pivot")
+weapon_sprite = NodePath("Pivot/weapon_sprite")
+animation_player = NodePath("animation_player")
+is_custom_rotation = true
+
+[node name="animation_player" type="AnimationPlayer" parent="component_MeleeWeapon"]
+root_node = NodePath("../Pivot/weapon_sprite")
+libraries = {
+&"": SubResource("AnimationLibrary_kvlxm")
+}
+
+[node name="Pivot" type="Marker2D" parent="component_MeleeWeapon"]
+position = Vector2(0, -13)
+
+[node name="weapon_sprite" type="Sprite2D" parent="component_MeleeWeapon/Pivot"]
+position = Vector2(13, -0.0119991)
+rotation = -1.309
+texture = ExtResource("15_myrg7")
+offset = Vector2(10, 0)
+
+[node name="component_Hitbox" parent="component_MeleeWeapon/Pivot/weapon_sprite" instance=ExtResource("14_ugbui")]
+position = Vector2(-15.9333, -9.18928)
+rotation = 1.309
+collision_layer = 2
+collision_mask = 0
+
+[node name="collision_shape_2d" type="CollisionShape2D" parent="component_MeleeWeapon/Pivot/weapon_sprite/component_Hitbox"]
+position = Vector2(17, -26.988)
+rotation = 0.222839
+shape = SubResource("CapsuleShape2D_fcs02")

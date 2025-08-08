@@ -16,6 +16,9 @@ func _init() -> void:
 func _ready() -> void:
 	pass
 
+func toggle_hitbox(val: bool):
+	self.monitoring = val
+
 func _on_hurtbox_entered(area: Area2D) -> void:
 	if (area is ComponentHurtbox):
 		var hurtbox: ComponentHurtbox = area
