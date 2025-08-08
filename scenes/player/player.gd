@@ -10,12 +10,14 @@ var run_texture: Texture2D = preload("./sprites/Player_run.png")
 @export var component_health: ComponentHealth
 @export var component_look: ComponentLook
 @export var component_velocity: ComponentVelocity
+@export var component_anim_ss: ComponentAnimSpriteSheet
 
 var max_health: float = 100.0
 
 var STATE: Dictionary[String, String] = {
 	"Idle": "Idle",
 	"Run": "Run",
+	"Attack": "Attack",
 }
 
 @export var anim_player: AnimationPlayer
