@@ -16,11 +16,11 @@ class_name ComponentMeleeWeapon
 func _ready() -> void:
 	component_hitbox.toggle_hitbox(false)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if (Input.is_action_pressed("attack")):
 		attack()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if (is_attacking): return
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	pivot.look_at(mouse_pos)

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cts876pjx0uon"]
+
+[ext_resource type="Script" uid="uid://vfmwas3h887k" path="res://scenes/common/component_TrailEffect/component_TrailEffect.gd" id="1_grvvi"]
+
+[sub_resource type="Curve" id="Curve_grvvi"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(0.554987, 0.0686759), 0.0, 0.0, 0, 0, Vector2(0.818414, 0.229249), 0.0, 0.0, 0, 0, Vector2(0.99999, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="Gradient" id="Gradient_u72hh"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[node name="component_TrailEffect" type="Line2D"]
+top_level = true
+points = PackedVector2Array(0, 0)
+width = 20.0
+width_curve = SubResource("Curve_grvvi")
+gradient = SubResource("Gradient_u72hh")
+script = ExtResource("1_grvvi")
+MAX_LENGTH = 20
