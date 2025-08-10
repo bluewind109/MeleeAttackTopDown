@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://s35lmfixqjns"]
+[gd_scene load_steps=6 format=3 uid="uid://s35lmfixqjns"]
 
 [ext_resource type="Script" uid="uid://cpl63vx0dh74g" path="res://scenes/game/game.gd" id="1_l1rk1"]
 [ext_resource type="PackedScene" uid="uid://geb0lg3x5n8l" path="res://scenes/background/background.tscn" id="2_h7iqs"]
 [ext_resource type="PackedScene" uid="uid://v67gpa0c2rdm" path="res://scenes/player/player.tscn" id="2_vasa2"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0sr1o"]
+size = Vector2(10, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kelw5"]
+size = Vector2(10, 100)
 
 [node name="game" type="Node2D"]
 y_sort_enabled = true
@@ -13,3 +19,13 @@ scroll_offset = Vector2(248, 149)
 
 [node name="Player" parent="." instance=ExtResource("2_vasa2")]
 position = Vector2(562, 303)
+
+[node name="static_body_2d" type="StaticBody2D" parent="."]
+position = Vector2(374, 308)
+collision_layer = 2
+
+[node name="sprite_2d" type="Sprite2D" parent="static_body_2d"]
+texture = SubResource("PlaceholderTexture2D_0sr1o")
+
+[node name="collision_shape_2d" type="CollisionShape2D" parent="static_body_2d"]
+shape = SubResource("RectangleShape2D_kelw5")

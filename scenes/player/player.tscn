@@ -14,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://w0mndjj8o3iu" path="res://scenes/common/charge_dash/charge_dash.tscn" id="13_gx1jg"]
 [ext_resource type="PackedScene" uid="uid://cts876pjx0uon" path="res://scenes/common/component_TrailEffect/component_TrailEffect.tscn" id="16_myrg7"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_oul6g"]
-radius = 0.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_gx1jg"]
+radius = 8.0
 
 [sub_resource type="Animation" id="Animation_8t03j"]
 length = 0.001
@@ -82,7 +82,7 @@ size = Vector2(14, 24)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "character_sprite", "component_health", "component_look", "component_velocity", "component_anim_ss", "trail_effect", "component_charge_dash", "anim_player") groups=["Player"]]
 z_index = 2
-collision_mask = 0
+collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_oul6g")
 state_machine = NodePath("callable_state_machine")
@@ -101,9 +101,8 @@ zoom = Vector2(1.5, 1.5)
 [node name="callable_state_machine" parent="." instance=ExtResource("2_rgyib")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-scale = Vector2(1, 2.72)
-shape = SubResource("CircleShape2D_oul6g")
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_gx1jg")
 
 [node name="component_Health" parent="." instance=ExtResource("2_yw30f")]
 

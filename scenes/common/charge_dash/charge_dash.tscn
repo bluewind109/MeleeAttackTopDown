@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://w0mndjj8o3iu"]
+[gd_scene load_steps=3 format=3 uid="uid://w0mndjj8o3iu"]
 
 [ext_resource type="Script" uid="uid://c8mevjamw3p6f" path="res://scenes/common/charge_dash/charge_dash.gd" id="1_j0abh"]
+[ext_resource type="PackedScene" uid="uid://yg3e33gqvoir" path="res://scenes/trajectory_line/trajectory_line.tscn" id="2_aklwl"]
 
-[node name="charge_dash" type="Node2D"]
+[node name="charge_dash" type="Node2D" node_paths=PackedStringArray("trajectory_line")]
 script = ExtResource("1_j0abh")
+trajectory_line = NodePath("trajectory_line")
+
+[node name="trajectory_line" parent="." instance=ExtResource("2_aklwl")]

@@ -23,7 +23,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		if (owner_node.velocity):
 			_decelerate()
-	owner_node.move_and_slide()
+	owner_node.move_and_collide(owner_node.velocity * _delta)
 
 func _accelerate():
 	var acceleration_rate: float = max_speed * acceleration_coefficient

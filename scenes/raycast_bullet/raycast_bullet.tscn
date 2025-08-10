@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://deeoxr3k346p8"]
+
+[ext_resource type="Script" uid="uid://bnj5lss78g13o" path="res://scenes/raycast_bullet/raycast_bullet.gd" id="1_ely3m"]
+
+[node name="raycast_bullet" type="Node2D"]
+script = ExtResource("1_ely3m")

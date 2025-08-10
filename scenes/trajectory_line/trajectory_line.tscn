@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://yg3e33gqvoir"]
+
+[ext_resource type="Script" uid="uid://4py8x0ncf3qh" path="res://scenes/trajectory_line/trajectory_line.gd" id="1_hbd7j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u5ogt"]
+
+[node name="trajectory_line" type="Line2D" node_paths=PackedStringArray("character_body_2d")]
+show_behind_parent = true
+top_level = true
+width = 2.5
+script = ExtResource("1_hbd7j")
+character_body_2d = NodePath("character_body_2d")
+
+[node name="character_body_2d" type="CharacterBody2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+motion_mode = 1
+
+[node name="collision_shape_2d" type="CollisionShape2D" parent="character_body_2d"]
+shape = SubResource("CircleShape2D_u5ogt")
