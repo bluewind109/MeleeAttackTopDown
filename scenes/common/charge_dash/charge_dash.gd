@@ -24,7 +24,7 @@ func _ready() -> void:
 	pass
 
 func render_trajectory(_direction: Vector2, _distance: float, _speed: float, delta: float):
-	var max_points = 20
+	var max_points = 40
 	var _speed_multiplier = 0.5
 
 	var pos: Vector2 = owner_ref.global_position
