@@ -1,6 +1,11 @@
 extends Node2D
 class_name RaycastBullet
 
+# code to init the bullet
+# var bullet_instance: RaycastBullet = raycast_bullet_scene.instantiate()
+# bullet_instance.init(pos, _direction, owner_ref.collision_mask)
+# get_tree().current_scene.add_child(bullet_instance)
+
 @export var speed: float = 120.0 * 120
 @export var bounce_count: int = 2
 @export var life_time: float = 0.3
