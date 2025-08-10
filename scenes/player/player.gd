@@ -11,6 +11,8 @@ var run_texture: Texture2D = preload("./sprites/Player_run.png")
 @export var component_look: ComponentLook
 @export var component_velocity: ComponentVelocity
 @export var component_anim_ss: ComponentAnimSpriteSheet
+@export var trail_effect: ComponentTrailEffect
+@export var component_charge_dash: ChargeDash
 
 var max_health: float = 100.0
 
@@ -37,23 +39,27 @@ var current_anim: String = ""
 
 func _ready() -> void:
 	component_velocity.owner_node = self
+	component_charge_dash.on_dash_started.connect(_on_dash_started)
+	component_charge_dash.on_dash_finished.connect(_on_dash_finished)
 
 	state_machine.add_states(STATE.Idle, CallableState.new(
-		on_idle_state,
-		on_enter_idle_state,
-		on_leave_idle_state
+		_on_idle_state,
+		_on_enter_idle_state,
+		_on_leave_idle_state
 	))
 
 	state_machine.add_states(STATE.Run, CallableState.new(
-		on_run_state,
-		on_enter_run_state,
-		on_leave_run_state
+		_on_run_state,
+		_on_enter_run_state,
+		_on_leave_run_state
 	))
 
 	state_machine.set_initial_state(STATE.Idle)
 
 	var health = max_health
 	component_health.init.call_deferred(max_health, health)
+
+	trail_effect.toggle_effect(false)
 
 func _physics_process(delta: float) -> void:
 	state_machine.update(delta)
@@ -74,22 +80,28 @@ func _play_anim(anim_name: String):
 	anim_player.speed_scale = 0.25
 	current_anim = anim_name
 
-func on_enter_idle_state():
+func _on_enter_idle_state():
 	_play_anim("idle")
 
-func on_idle_state(_delta: float):
+func _on_idle_state(_delta: float):
 	if (velocity != Vector2.ZERO):
 		state_machine.change_state(STATE.Run)
 
-func on_leave_idle_state():
+func _on_leave_idle_state():
 	pass
 
-func on_enter_run_state():
+func _on_enter_run_state():
 	_play_anim("run")
 
-func on_run_state(_delta: float):
+func _on_run_state(_delta: float):
 	if (velocity == Vector2.ZERO):
 		state_machine.change_state(STATE.Idle)
 
-func on_leave_run_state():
+func _on_leave_run_state():
 	pass
+
+func _on_dash_started():
+	trail_effect.toggle_effect(true)
+
+func _on_dash_finished():
+	trail_effect.toggle_effect(false)

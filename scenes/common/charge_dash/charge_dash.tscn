@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://w0mndjj8o3iu"]
+
+[ext_resource type="Script" uid="uid://c8mevjamw3p6f" path="res://scenes/common/charge_dash/charge_dash.gd" id="1_j0abh"]
+
+[node name="charge_dash" type="Node2D"]
+script = ExtResource("1_j0abh")

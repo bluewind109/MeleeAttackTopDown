@@ -8,4 +8,6 @@ func _process(_delta) -> void:
 	add_point(get_parent().global_position + offset)
 	if (points.size() > MAX_LENGTH):
 		remove_point(0)
-	
+
+func toggle_effect(val: bool):
+	visible = val

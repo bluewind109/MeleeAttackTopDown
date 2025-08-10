@@ -1,0 +1,231 @@
+[gd_scene load_steps=10 format=3 uid="uid://knvna8knwwta"]
+
+[ext_resource type="Script" uid="uid://c5y06pe6fo72x" path="res://scenes/common/component_MeleeWeapon/component_MeleeWeapon.gd" id="1_b3u8b"]
+[ext_resource type="Texture2D" uid="uid://ckgf02737wxa0" path="res://scenes/player/sprites/Sword1.png" id="2_cju6i"]
+[ext_resource type="PackedScene" uid="uid://deglm4gc4ddcp" path="res://scenes/common/component_Hitbox/component_Hitbox.tscn" id="3_th1hc"]
+[ext_resource type="PackedScene" uid="uid://cts876pjx0uon" path="res://scenes/common/component_TrailEffect/component_TrailEffect.tscn" id="4_npyc7"]
+
+[sub_resource type="Animation" id="Animation_myrg7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(13, -0.0119991)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.309]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../..:is_attacking")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("marker_2d/component_TrailEffect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("marker_2d/component_TrailEffect:MAX_LENGTH")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [40]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("marker_2d/component_TrailEffect:width")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+
+[sub_resource type="Animation" id="Animation_fcs02"]
+resource_name = "attack1"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4075, 0.458462, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(13, -0.0119991), Vector2(14, -12), Vector2(14, -12), Vector2(22, 9), Vector2(22, 7), Vector2(13, -0.0119991)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.407522, 0.458462, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-1.309, -2.42343, -2.42343, 0.554691, 0.0255932, -1.309]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../..:is_attacking")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("component_Hitbox")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3, 0.4075),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"toggle_hitbox"
+}, {
+"args": [false],
+"method": &"toggle_hitbox"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("marker_2d/component_TrailEffect:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.3, 0.4075),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("marker_2d/component_TrailEffect:MAX_LENGTH")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [40]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("marker_2d/component_TrailEffect:width")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kvlxm"]
+_data = {
+&"RESET": SubResource("Animation_myrg7"),
+&"attack1": SubResource("Animation_fcs02")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcs02"]
+radius = 2.39255
+height = 23.224
+
+[sub_resource type="Curve" id="Curve_myrg7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="component_MeleeWeapon" type="Node2D" node_paths=PackedStringArray("component_hitbox", "pivot", "weapon_sprite", "animation_player")]
+script = ExtResource("1_b3u8b")
+component_hitbox = NodePath("Pivot/weapon_sprite/component_Hitbox")
+pivot = NodePath("Pivot")
+weapon_sprite = NodePath("Pivot/weapon_sprite")
+animation_player = NodePath("animation_player")
+is_custom_rotation = true
+
+[node name="animation_player" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Pivot/weapon_sprite")
+libraries = {
+&"": SubResource("AnimationLibrary_kvlxm")
+}
+
+[node name="Pivot" type="Marker2D" parent="."]
+position = Vector2(0, -13)
+
+[node name="weapon_sprite" type="Sprite2D" parent="Pivot"]
+position = Vector2(13, -0.0119991)
+rotation = -1.309
+texture = ExtResource("2_cju6i")
+offset = Vector2(10, 0)
+
+[node name="component_Hitbox" parent="Pivot/weapon_sprite" instance=ExtResource("3_th1hc")]
+position = Vector2(-15.9333, -9.18928)
+rotation = 1.309
+collision_layer = 2
+collision_mask = 0
+
+[node name="collision_shape_2d" type="CollisionShape2D" parent="Pivot/weapon_sprite/component_Hitbox"]
+position = Vector2(17, -26.988)
+rotation = 0.222839
+shape = SubResource("CapsuleShape2D_fcs02")
+
+[node name="marker_2d" type="Marker2D" parent="Pivot/weapon_sprite"]
+position = Vector2(16.7373, 0.691682)
+
+[node name="component_TrailEffect" parent="Pivot/weapon_sprite/marker_2d" instance=ExtResource("4_npyc7")]
+visible = false
+show_behind_parent = true
+width_curve = SubResource("Curve_myrg7")
+MAX_LENGTH = 40
