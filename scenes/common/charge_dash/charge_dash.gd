@@ -25,36 +25,43 @@ func _ready() -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	if (not is_dashing):
-		mouse_pos = get_global_mouse_position()
-		if (Input.is_action_pressed("attack")):
-			if (not is_start_pos_set):
-				start_pos = mouse_pos
-				is_start_pos_set = true
+	_check_dash_input(delta)
+	_update_dash(delta)
 
-			is_holding = true
-			distance_dragged = clampf(
-				mouse_pos.distance_to(start_pos), 
-				distance_range.x, 
-				distance_range.y
+func _check_dash_input(delta: float):
+	if (is_dashing):
+		return
+
+	mouse_pos = get_global_mouse_position()
+	if (Input.is_action_pressed("attack")):
+		if (not is_start_pos_set):
+			start_pos = mouse_pos
+			is_start_pos_set = true
+
+		is_holding = true
+		distance_dragged = clampf(
+			mouse_pos.distance_to(start_pos), 
+			distance_range.x, 
+			distance_range.y
+		)
+		if (is_more_than_minimum_distance()):
+			trajectory_line.render_trajectory(
+				owner_ref.global_position,
+				mouse_pos.direction_to(start_pos), 
+				distance_dragged, 
+				dash_speed, 
+				delta
 			)
-			if (is_more_than_minimum_distance()):
-				trajectory_line.render_trajectory(
-					owner_ref.global_position,
-					mouse_pos.direction_to(start_pos), 
-					distance_dragged, 
-					dash_speed, 
-					delta
-				)
-		
-		if (Input.is_action_just_released("attack") and is_holding):
-			dash_direction = mouse_pos.direction_to(start_pos)
-			distance_dragged = mouse_pos.distance_to(start_pos)
-			if (is_more_than_minimum_distance()): distance_remaining = distance_dragged
-			is_start_pos_set = false
-			is_holding = false
-			trajectory_line.clear_points()
-	
+
+	if (Input.is_action_just_released("attack") and is_holding):
+		dash_direction = mouse_pos.direction_to(start_pos)
+		distance_dragged = mouse_pos.distance_to(start_pos)
+		if (is_more_than_minimum_distance()): distance_remaining = distance_dragged
+		is_start_pos_set = false
+		is_holding = false
+		trajectory_line.clear_points()
+
+func _update_dash(delta: float):
 	if (is_more_than_minimum_distance() and dash_direction and distance_remaining > 0):
 		if (not is_dashing): 
 			on_dash_started.emit()
