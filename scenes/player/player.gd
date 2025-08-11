@@ -4,8 +4,6 @@ class_name Player
 @export var state_machine: CallableStateMachine
 
 @export var character_sprite: Sprite2D
-var idle_texture: Texture2D = preload("./sprites/Player_idle.png")
-var run_texture: Texture2D = preload("./sprites/Player_run.png")
 
 @export var component_health: ComponentHealth
 @export var component_look: ComponentLook
@@ -22,25 +20,31 @@ var STATE: Dictionary[String, String] = {
 	"Attack": "Attack",
 }
 
-@export var anim_player: AnimationPlayer
-var anim_dict: Dictionary [String, Variant] = {
-	"idle": {
-		"anim_id": "player_idle",
-		"texture": idle_texture,
-		"hframes": 6
-	},
-	"run": {
-		"anim_id": "player_run",
-		"texture": run_texture,
-		"hframes": 8
-	},
-}
 var current_anim: String = ""
 
 func _ready() -> void:
 	component_velocity.owner_node = self
 	component_charge_dash.on_dash_started.connect(_on_dash_started)
 	component_charge_dash.on_dash_finished.connect(_on_dash_finished)
+
+	component_anim_ss.init_anim_data({
+		"idle": {
+			"anim_id": "player_idle",
+			"hframes": 10
+		},
+		"run": {
+			"anim_id": "player_run",
+			"hframes": 16
+		},
+		"wind_up": {
+			"anim_id": "player_wind_up",
+			"hframes": 4
+		},
+		"attack": {
+			"anim_id": "player_attack",
+			"hframes": 1
+		}
+	})
 
 	state_machine.add_states(STATE.Idle, CallableState.new(
 		_on_idle_state,
@@ -67,21 +71,8 @@ func _physics_process(delta: float) -> void:
 	var target_pos = get_global_mouse_position()
 	component_look.look(target_pos)
 
-func _play_anim(anim_name: String):
-	if (not anim_dict.has(anim_name)): return
-	if (current_anim == anim_name): return
-	# print("_play_anim: ", anim_name)
-	var sprite_size: float = 32
-	var anim_data: Variant = anim_dict[anim_name]
-	character_sprite.texture = anim_data.texture
-	character_sprite.hframes = anim_data.hframes
-	character_sprite.region_rect.size = Vector2(sprite_size * character_sprite.hframes, sprite_size)
-	anim_player.play(anim_dict[anim_name].anim_id)
-	anim_player.speed_scale = 0.25
-	current_anim = anim_name
-
 func _on_enter_idle_state():
-	_play_anim("idle")
+	component_anim_ss.play_anim("idle")
 
 func _on_idle_state(_delta: float):
 	if (velocity != Vector2.ZERO):
@@ -91,7 +82,8 @@ func _on_leave_idle_state():
 	pass
 
 func _on_enter_run_state():
-	_play_anim("run")
+	print("_on_enter_run_state")
+	component_anim_ss.play_anim("run")
 
 func _on_run_state(_delta: float):
 	if (velocity == Vector2.ZERO):

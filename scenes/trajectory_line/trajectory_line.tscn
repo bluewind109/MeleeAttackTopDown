@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://4py8x0ncf3qh" path="res://scenes/trajectory_line/trajectory_line.gd" id="1_hbd7j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u5ogt"]
+radius = 2.0
 
 [node name="trajectory_line" type="Line2D" node_paths=PackedStringArray("character_body_2d")]
 show_behind_parent = true
