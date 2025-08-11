@@ -23,24 +23,6 @@ signal on_dash_finished
 func _ready() -> void:
 	pass
 
-func render_trajectory(_direction: Vector2, _distance: float, _speed: float, delta: float):
-	var max_points = 40
-	var _speed_multiplier = 0.5
-
-	var pos: Vector2 = owner_ref.global_position
-	var line_velocity: Vector2 = _direction * _speed * _speed_multiplier
-
-	trajectory_line.clear_points()
-	for i in max_points:
-		trajectory_line.add_point(pos)
-		if (pos.distance_to(owner_ref.global_position) < _distance):
-			var collision = trajectory_line.get_body().move_and_collide(line_velocity * delta, false, true, true)
-			if (collision):
-				line_velocity = line_velocity.bounce(collision.get_normal()) * 0.6
-
-			pos += line_velocity * delta
-			trajectory_line.get_body().position = pos
-
 func _physics_process(delta: float) -> void:
 	if (not is_dashing):
 		mouse_pos = get_global_mouse_position()
@@ -52,7 +34,13 @@ func _physics_process(delta: float) -> void:
 			is_holding = true
 			var _distance = mouse_pos.distance_to(start_pos)
 			if (_distance > 25):
-				render_trajectory(mouse_pos.direction_to(start_pos), _distance, speed, delta)
+				trajectory_line.render_trajectory(
+					owner_ref.global_position,
+					mouse_pos.direction_to(start_pos), 
+					_distance, 
+					speed, 
+					delta
+				)
 		
 		if (Input.is_action_just_released("attack") and is_holding):
 			direction = mouse_pos.direction_to(start_pos)
