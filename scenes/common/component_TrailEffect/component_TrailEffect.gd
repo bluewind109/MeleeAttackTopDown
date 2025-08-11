@@ -11,3 +11,6 @@ func _process(_delta) -> void:
 
 func toggle_effect(val: bool):
 	visible = val
+
+func reset_effect():
+	clear_points()

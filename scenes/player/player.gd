@@ -93,7 +93,9 @@ func _on_leave_run_state():
 	pass
 
 func _on_dash_started():
+	trail_effect.reset_effect()
 	trail_effect.toggle_effect(true)
 
 func _on_dash_finished():
+	trail_effect.reset_effect()
 	trail_effect.toggle_effect(false)
