@@ -17,35 +17,60 @@ var max_health: float = 100.0
 var STATE: Dictionary[String, String] = {
 	"Idle": "Idle",
 	"Run": "Run",
+	"WindUp": "WindUp",
 	"Attack": "Attack",
 }
+var speed_dict: Dictionary[String, float] = {}
 
 var current_anim: String = ""
 
 func _ready() -> void:
-	component_velocity.owner_node = self
-	component_charge_dash.on_dash_started.connect(_on_dash_started)
-	component_charge_dash.on_dash_finished.connect(_on_dash_finished)
+	init_speed_dict()
+	init_anim_dict("")
+	bind_signals()
 
+	component_velocity.owner_node = self
+	var health = max_health
+	component_health.init.call_deferred(max_health, health)
+	trail_effect.toggle_effect(false)
+
+	add_states()
+
+func init_speed_dict():
+	speed_dict = {
+		STATE.Idle: 150.0,
+		STATE.Normal: 75.0,
+		STATE.WindUp: 150.0,
+		STATE.Attack: 150.0,
+	}
+
+func init_anim_dict(_lib_name: String):
+	var lib_name = ""
+	if (_lib_name != ""): lib_name = _lib_name + "/"
 	component_anim_ss.init_anim_data({
 		"idle": {
-			"anim_id": "player_idle",
+			"anim_id": lib_name + "player_idle",
 			"hframes": 10
 		},
 		"run": {
-			"anim_id": "player_run",
+			"anim_id": lib_name + "player_run",
 			"hframes": 16
 		},
 		"wind_up": {
-			"anim_id": "player_wind_up",
+			"anim_id": lib_name + "player_wind_up",
 			"hframes": 4
 		},
 		"attack": {
-			"anim_id": "player_attack",
+			"anim_id": lib_name + "player_attack",
 			"hframes": 1
 		}
 	})
 
+func bind_signals():
+	component_charge_dash.on_dash_started.connect(_on_dash_started)
+	component_charge_dash.on_dash_finished.connect(_on_dash_finished)
+
+func add_states():
 	state_machine.add_states(STATE.Idle, CallableState.new(
 		_on_idle_state,
 		_on_enter_idle_state,
@@ -58,12 +83,19 @@ func _ready() -> void:
 		_on_leave_run_state
 	))
 
+	state_machine.add_states(STATE.WindUp, CallableState.new(
+		_on_wind_up_state,
+		_on_enter_wind_up_state,
+		_on_leave_wind_up_state
+	))
+
+	state_machine.add_states(STATE.Attack, CallableState.new(
+		_on_attack_state,
+		_on_enter_attack_state,
+		_on_leave_attack_state
+	))
+
 	state_machine.set_initial_state(STATE.Idle)
-
-	var health = max_health
-	component_health.init.call_deferred(max_health, health)
-
-	trail_effect.toggle_effect(false)
 
 func _physics_process(delta: float) -> void:
 	state_machine.update(delta)
@@ -89,6 +121,24 @@ func _on_run_state(_delta: float):
 		state_machine.change_state(STATE.Idle)
 
 func _on_leave_run_state():
+	pass
+
+func _on_enter_wind_up_state():
+	pass
+
+func _on_wind_up_state():
+	pass
+
+func _on_leave_wind_up_state():
+	pass
+
+func _on_enter_attack_state():
+	pass
+
+func _on_attack_state():
+	pass
+
+func _on_leave_attack_state():
 	pass
 
 func _on_dash_started():
