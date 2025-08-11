@@ -82,7 +82,6 @@ func _on_leave_idle_state():
 	pass
 
 func _on_enter_run_state():
-	print("_on_enter_run_state")
 	component_anim_ss.play_anim("run")
 
 func _on_run_state(_delta: float):
