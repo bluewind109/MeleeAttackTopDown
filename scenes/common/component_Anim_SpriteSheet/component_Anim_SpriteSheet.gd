@@ -13,7 +13,7 @@ func _ready() -> void:
 func init_anim_data(data: Dictionary[String, Variant]):
 	anim_dict = data
 
-func play_anim(_anim_name: String, is_loop: bool = true):	
+func play_anim(_anim_name: String, is_loop: bool = true, speed_scale: float = 1.0):	
 	if (not anim_dict.has(_anim_name)): return
 	if (current_anim == _anim_name): return
 	# print("_play_anim: ", anim_name)
@@ -22,6 +22,7 @@ func play_anim(_anim_name: String, is_loop: bool = true):
 		anim_player.get_animation(anim_dict[_anim_name].anim_id).loop_mode = Animation.LoopMode.LOOP_LINEAR
 	else:
 		anim_player.get_animation(anim_dict[_anim_name].anim_id).loop_mode = Animation.LoopMode.LOOP_NONE
+	anim_player.speed_scale = speed_scale
 	anim_player.play(anim_dict[_anim_name].anim_id)
 	current_anim = _anim_name
 
