@@ -39,7 +39,7 @@ func _ready() -> void:
 func init_speed_dict():
 	speed_dict = {
 		STATE.Idle: 150.0,
-		STATE.Normal: 75.0,
+		STATE.Run: 75.0,
 		STATE.WindUp: 150.0,
 		STATE.Attack: 150.0,
 	}
@@ -67,6 +67,7 @@ func init_anim_dict(_lib_name: String):
 	})
 
 func bind_signals():
+	component_charge_dash.on_dash_wind_up.connect(_on_dash_wind_up)
 	component_charge_dash.on_dash_started.connect(_on_dash_started)
 	component_charge_dash.on_dash_finished.connect(_on_dash_finished)
 
@@ -100,15 +101,14 @@ func add_states():
 func _physics_process(delta: float) -> void:
 	state_machine.update(delta)
 
-	var target_pos = get_global_mouse_position()
-	component_look.look(target_pos)
 
 func _on_enter_idle_state():
 	component_anim_ss.play_anim("idle")
 
 func _on_idle_state(_delta: float):
-	if (velocity != Vector2.ZERO):
-		state_machine.change_state(STATE.Run)
+	# if (velocity != Vector2.ZERO):
+	# 	state_machine.change_state(STATE.Run)
+	component_look.look(get_global_mouse_position())
 
 func _on_leave_idle_state():
 	pass
@@ -119,21 +119,22 @@ func _on_enter_run_state():
 func _on_run_state(_delta: float):
 	if (velocity == Vector2.ZERO):
 		state_machine.change_state(STATE.Idle)
+	component_look.look(get_global_mouse_position())
 
 func _on_leave_run_state():
 	pass
 
 func _on_enter_wind_up_state():
-	pass
+	component_anim_ss.play_anim("wind_up")
 
 func _on_wind_up_state():
-	pass
+	component_look.look(get_global_mouse_position())
 
 func _on_leave_wind_up_state():
 	pass
 
 func _on_enter_attack_state():
-	pass
+	component_anim_ss.play_anim("attack")
 
 func _on_attack_state():
 	pass
@@ -141,10 +142,15 @@ func _on_attack_state():
 func _on_leave_attack_state():
 	pass
 
+func _on_dash_wind_up():
+	state_machine.change_state(STATE.WindUp)
+
 func _on_dash_started():
+	state_machine.change_state(STATE.Attack)
 	trail_effect.reset_effect()
 	trail_effect.toggle_effect(true)
 
 func _on_dash_finished():
+	state_machine.change_state(STATE.Idle)
 	trail_effect.reset_effect()
 	trail_effect.toggle_effect(false)

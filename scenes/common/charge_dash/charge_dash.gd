@@ -18,6 +18,7 @@ var distance_remaining: float = 0
 @export var dash_speed: float = 1500
 var is_dashing: bool = false
 
+signal on_dash_wind_up
 signal on_dash_started
 signal on_dash_finished
 
@@ -45,6 +46,7 @@ func _check_dash_input(delta: float):
 			distance_range.y
 		)
 		if (is_more_than_minimum_distance()):
+			on_dash_wind_up.emit()
 			trajectory_line.render_trajectory(
 				owner_ref.global_position,
 				mouse_pos.direction_to(start_pos), 
@@ -66,7 +68,20 @@ func _update_dash(delta: float):
 		if (not is_dashing): 
 			on_dash_started.emit()
 			is_dashing = true
-		owner_ref.move_and_collide(dash_direction * dash_speed * delta)
+		var dash_velocity = dash_direction * dash_speed
+		var collision_info = owner_ref.move_and_collide(
+			dash_velocity * delta,
+			false,
+			true,
+			true
+		)
+
+		# TODO add bounce collision during dash
+		if (collision_info):
+			var bounce_multiplier: float = 1.0
+			dash_velocity = dash_velocity.bounce(collision_info.get_normal()) * bounce_multiplier
+			owner_ref.velocity = dash_velocity
+
 		distance_remaining -= dash_direction.length() * dash_speed * delta
 		if (distance_remaining <= 0 and is_dashing):
 			is_dashing = false

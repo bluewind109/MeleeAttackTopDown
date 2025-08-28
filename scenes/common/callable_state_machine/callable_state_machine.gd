@@ -32,6 +32,8 @@ func change_state(state_name: String):
 		push_warning("No state found with name: ", state_name)
 
 func _set_state(state_name: String):
+	if (current_state == state_name): return
+
 	if (current_state != ""):
 		var leave_callable: Callable = state_dictionary[current_state].leave
 		if (not leave_callable.is_null()):
