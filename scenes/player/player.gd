@@ -127,7 +127,7 @@ func _on_leave_run_state():
 func _on_enter_wind_up_state():
 	component_anim_ss.play_anim("wind_up")
 
-func _on_wind_up_state():
+func _on_wind_up_state(_delta: float):
 	component_look.look(get_global_mouse_position())
 
 func _on_leave_wind_up_state():
@@ -136,7 +136,7 @@ func _on_leave_wind_up_state():
 func _on_enter_attack_state():
 	component_anim_ss.play_anim("attack")
 
-func _on_attack_state():
+func _on_attack_state(_delta: float):
 	pass
 
 func _on_leave_attack_state():
